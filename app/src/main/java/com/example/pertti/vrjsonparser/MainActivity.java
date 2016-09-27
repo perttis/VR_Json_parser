@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private String TAG = MainActivity.class.getSimpleName();
     private ProgressDialog pDialog;
     private ListView lv;
+    private Integer testi=0;
 
     private static String url = "http://rata.digitraffic.fi/api/v1/metadata/stations";
 
