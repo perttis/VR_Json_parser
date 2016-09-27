@@ -2,7 +2,6 @@ package com.example.pertti.vrjsonparser;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,13 +25,13 @@ public class MainActivity extends AppCompatActivity {
 
     private static String url = "http://rata.digitraffic.fi/api/v1/metadata/stations";
 
-    ArrayList<HashMap<String, String>> contactList;
+    ArrayList<HashMap<String, String>> asemaList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        contactList = new ArrayList<>();
+        asemaList = new ArrayList<>();
         lv = (ListView) findViewById(R.id.list);
         new GetContacts().execute();
     }
@@ -78,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                         contact.put("stationUICCode", c.getString("stationUICCode"));
 
 // adding contact to contact list
-                        contactList.add(contact);
+                        asemaList.add(contact);
                     }
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -120,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
  * Updating parsed JSON data into ListView
  * */
             ListAdapter adapter = new SimpleAdapter(
-                    MainActivity.this, contactList,
+                    MainActivity.this, asemaList,
                     R.layout.list_item, new String[]{"stationName", "stationShortCode",
                     "stationUICCode"}, new int[]{R.id.stationName,
                     R.id.stationShortCode, R.id.stationUICCode});
