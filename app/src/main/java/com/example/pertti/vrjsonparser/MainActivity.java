@@ -19,14 +19,12 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static String url = "http://rata.digitraffic.fi/api/v1/metadata/stations";
+    ArrayList<HashMap<String, String>> asemaList;
     private String TAG = MainActivity.class.getSimpleName();
     private ProgressDialog pDialog;
     private ListView lv;
     private Integer testi=0;
-
-    private static String url = "http://rata.digitraffic.fi/api/v1/metadata/stations";
-
-    ArrayList<HashMap<String, String>> asemaList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,23 +60,20 @@ public class MainActivity extends AppCompatActivity {
 
             if (jsonStr != null) {
                 try {
-                    JSONArray contacts = new JSONArray(jsonStr);
+                    JSONArray stations = new JSONArray(jsonStr);
 
-// Getting JSON Array node
-                    //JSONArray contacts = jsonObj.getJSONArray("contacts");
-                    //JSONArray contacts = new JSONArray(jsonStr);
 
-// looping through All Contacts
-                    for (int i = 0; i < contacts.length(); i++) {
-                        HashMap<String, String> contact = new HashMap<>();
-                        JSONObject c = contacts.getJSONObject(i);
+                    // looping through All Stations
+                    for (int i = 0; i < stations.length(); i++) {
+                        HashMap<String, String> stationMap = new HashMap<>();
+                        JSONObject c = stations.getJSONObject(i);
 
-                        contact.put("stationShortCode", c.getString("stationShortCode"));
-                        contact.put("stationName", c.getString("stationName"));
-                        contact.put("stationUICCode", c.getString("stationUICCode"));
+                        stationMap.put("stationShortCode", c.getString("stationShortCode"));
+                        stationMap.put("stationName", c.getString("stationName"));
+                        stationMap.put("stationUICCode", c.getString("stationUICCode"));
 
-// adding contact to contact list
-                        asemaList.add(contact);
+                        // adding station to station list
+                        asemaList.add(stationMap);
                     }
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
